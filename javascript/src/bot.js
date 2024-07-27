@@ -10,12 +10,12 @@ import { Consts } from '../core/constants.js';
 //4f352783-52b0-4893-8a7e-6ea35db45830
 class MyBot {
     constructor() {
-        this.name = 'name_of_my_super_cool_bot';
+        this.name = 'EarthIsFlat';
         this.state = null;
-        //this.position = null;
         this.currentWeapon = null;
+        this.currentEnemy = null;
+        this.position
     }
-
     /**
      * (fr) Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
      *      le comportement de voter bot. Elle doit retourner une liste d'actions 
@@ -72,9 +72,9 @@ class MyBot {
 
     on_tick(game_state) {
         var us = null;
-
+        //var currentEnemy = null;
         for(let i=0;i<game_state.players.length;i++){
-            if(game_state.players[i].name === "EarthIsFlat"){
+            if(game_state.players[i].name === this.name){
                 us = game_state.players[i]
                 break;
             }
@@ -125,12 +125,12 @@ class MyBot {
                 }
             }
         }while(notSorted)
-        
-
-
+        if(us.health <= 0 || this.currentEnemy === null){
+            this.currentEnemy = game_state.players[1];
+        }
             
-        actionList.push(new ShootAction({x: game_state.players[1].pos.x / 30, y: game_state.players[1].pos.y / 30}));
-        actionList.push( new MoveAction({x: game_state.players[1].pos.x / 30, y: game_state.players[1].pos.y / 30}));
+        actionList.push(new ShootAction({x: this.currentEnemy.pos.x / 30, y: this.currentEnemy.pos.y / 30}));
+        actionList.push( new MoveAction({x: this.currentEnemy.pos.x / 30, y: this.currentEnemy.pos.y / 30}));
         //actionList.push(new ShootAction({x : 0, y: 0}))
         //actionList.push(new ShootAction({x : position.x, y: position.y}))
         
