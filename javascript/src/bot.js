@@ -103,27 +103,28 @@ class MyBot {
         
         
         
-        //let a = game_state.players[0];
-        //let b = null;
-        //let aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) * (a.pos.y - position.y))
-        //let bDist = null;
-        //let temp = null;
-        //let notSorted = false;
-        //do{
-        //    for(let i=0;i<game_state.players.length;i++){
-        //        b = players[i]
-        //        bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) * (b.pos.y - position.y))
-        //        if(bDist < aDist){
-        //            temp = a
-        //            a = b
-        //            b = temp
-        //            aDist = bDist
-        //            notSorted = true;
-        //        }
-        //    }
-        //}while(notSorted)
+        var a = game_state.players[0];
+        var b = null;
+        var aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) * (a.pos.y - position.y))
+        var bDist = null;
+        var temp = null;
+        var notSorted = false;
+        do{
+            notSorted = false;
+            for(let i=0;i<game_state.players.length;i++){
+                b = game_state.players[i]
+                bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) * (b.pos.y - position.y))
+                if(bDist < aDist){
+                    temp = a
+                    a = b
+                    b = temp
+                    aDist = bDist
+                    notSorted = true;
+                }
+            }
+        }while(notSorted)
         
-        //actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
+        actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
         //actionList.push(new ShootAction({x : 0, y: 0}))
         //actionList.push(new ShootAction({x : position.x, y: position.y}))
         
