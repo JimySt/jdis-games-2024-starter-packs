@@ -7,7 +7,7 @@ import { Consts } from '../core/constants.js';
  * (en) This class represents your bot. You can define attributes and methods in it that will be kept 
  *      between each call of the `on_tick` method.
  */
-//cd714cb7-d1a1-42f4-afd7-6b7dc51e33e7
+//4f352783-52b0-4893-8a7e-6ea35db45830
 class MyBot {
     constructor() {
         this.name = 'name_of_my_super_cool_bot';
@@ -72,7 +72,7 @@ class MyBot {
      */
 
     on_tick(game_state) {
-        this.us = game_state.players.find(x => x.name === "LookAtThisGraph")
+        this.us = game_state.players.find(function(player){return player.name === "EarthIsFlat"})
         this.position = us.pos ;
         //console.log(`Current tick: ${game_state.tick}`);
         let actionList = [];
@@ -85,6 +85,7 @@ class MyBot {
         //    new SwitchWeaponAction(Weapon.Blade),
         //    new SaveAction( new TextEncoder().encode("Hello, world!"))
         //];
+        actionList.push(attack_closest_player(players))
         return actionList
     }
 
@@ -122,6 +123,31 @@ class MyBot {
         
         return new MoveAction()
     }
+
+    attack_closest_player(players){
+        let a = players[0];
+        let b = null;
+        let aDist = Math.sqrt((a.pos.x - this.position.x) * (a.pos.x - this.position.x) + (a.pos.y - this.position.y) + (a.pos.y - this.position.y))
+        let bDist = null;
+        let temp = null;
+        let notSorted = false;
+        do{
+            for(let i=0;i<players.length;i++){
+                b = players[i]
+                bDist = Math.sqrt((b.pos.x - this.position.x) * (b.pos.x - this.position.x) + (b.pos.y - this.position.y) + (b.pos.y - this.position.y))
+                if(bDist < aDist){
+                    temp = a
+                    a = b
+                    b = temp
+                    aDist = bDist
+                    notSorted = true;
+                }
+            }
+        }while(notSorted)
+        return new ShootAction(players[0].pos.x, players[0].pos.y);
+    }
+
+
 };
 
 export { MyBot };
