@@ -80,6 +80,8 @@ class MyBot {
             }
         }
         var position = us.pos;
+        position.x = position.x / 30
+        position.y = position.y / 30
         let actionList = [];
         
         if(this.currentWeapon === null){
@@ -125,6 +127,7 @@ class MyBot {
         }while(notSorted)
         
         actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
+        actionList.push( new MoveAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}))
         //actionList.push(new ShootAction({x : 0, y: 0}))
         //actionList.push(new ShootAction({x : position.x, y: position.y}))
         
