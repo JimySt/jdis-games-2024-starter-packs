@@ -67,6 +67,14 @@ class MyBot {
      * @param {Model.GameState} game_state 
      * @returns{Model.Actions}
      */
+
+    findClosestCoin(array) {
+        for i -> 0 to arrayLength 
+            for j -> 0 to (arrayLength - i - 1)
+                if arr[j] > arr[j + 1]
+                    swap(arr[j], arr[j + 1])
+    }
+
     on_tick(game_state) {
         console.log(`Current tick: ${game_state.tick}`);
 
