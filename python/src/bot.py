@@ -5,7 +5,7 @@ from core.consts import Consts
 from core.game_state import GameState, PlayerWeapon, Point
 from core.map_state import MapState
 
-
+#cd714cb7-d1a1-42f4-afd7-6b7dc51e33e7
 class MyBot:
      """
      (fr) Cette classe représente votre bot. Vous pouvez y définir des attributs et des méthodes qui 
