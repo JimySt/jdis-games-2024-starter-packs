@@ -14,7 +14,8 @@ class MyBot {
         this.state = null;
         this.currentWeapon = null;
         this.currentEnemy = null;
-        this.position
+        this.position = null;
+        this.tick = null;
     }
     /**
      * (fr) Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
@@ -71,73 +72,60 @@ class MyBot {
      */
 
     on_tick(game_state) {
+        if (this.tick === null) {
+            this.tick = game_state.tick;
+        }
+    
         var us = null;
-        //var currentEnemy = null;
-        for(let i=0;i<game_state.players.length;i++){
-            if(game_state.players[i].name === this.name){
-                us = game_state.players[i]
+        for (let i = 0; i < game_state.players.length; i++) {
+            if (game_state.players[i].name === this.name) {
+                us = game_state.players[i];
                 break;
             }
         }
-        var position = us.pos;
-        position.x = position.x / 30
-        position.y = position.y / 30
+    
+        var newPosition = { x: us.pos.x / 30, y: us.pos.y / 30 };
         let actionList = [];
-        
-        if(this.currentWeapon === null){
-            actionList.push(new SwitchWeaponAction(1))
-            this.currentWeapon = true
+    
+        if (this.currentWeapon === null) {
+            actionList.push(new SwitchWeaponAction(1));
+            this.currentWeapon = true;
         }
-        
-        
-        //actionList.unshift(move_to_closest_coin(game_state.coins))
-
-        //return [
-        //    new MoveAction({ x: 10.0, y: 11.34 }),
-        //    new ShootAction({ x: 11.2222, y: 13.547 }),
-        //    new SwitchWeaponAction(Weapon.Blade),
-        //    new SaveAction( new TextEncoder().encode("Hello, world!"))
-        //];
-        //actionList.push(attack_closest_player(players))
-        //actionList.push(new SaveAction(new TextEncoder().encode("ok")))
-        actionList.push(new MoveAction({ x : 0, y : 0}));
-        actionList.push(new SaveAction( new TextEncoder().encode("Hello, world!")))
-        
-        
-        
-        var a = game_state.players[0];
-        var b = null;
-        var aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) * (a.pos.y - position.y))
-        var bDist = null;
-        var temp = null;
-        var notSorted = false;
-        do{
-            notSorted = false;
-            for(let i=0;i<game_state.players.length;i++){
-                b = game_state.players[i]
-                bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) * (b.pos.y - position.y))
-                if(bDist < aDist){
-                    temp = a
-                    a = b
-                    b = temp
-                    aDist = bDist
-                    notSorted = true;
+    
+        // Filter out the bot itself from the players list and sort remaining players by distance to the bot
+        var sortedPlayers = game_state.players
+            .filter(player => player.name !== this.name)
+            .sort((a, b) => {
+                var aDist = Math.sqrt((newPosition.x - a.pos.x / 30) ** 2 + (newPosition.y - a.pos.y / 30) ** 2);
+                var bDist = Math.sqrt((newPosition.x - b.pos.x / 30) ** 2 + (newPosition.y - b.pos.y / 30) ** 2);
+                return aDist - bDist;
+            });
+    
+        // Choose the nearest player as the current enemy
+        this.currentEnemy = sortedPlayers[0];
+    
+        // Update currentEnemy if it's not null
+        if (this.currentEnemy !== null) {
+            for (let i = 0; i < game_state.players.length; i++) {
+                if (game_state.players[i].name === this.currentEnemy.name) {
+                    this.currentEnemy = game_state.players[i];
+                    break;
                 }
             }
-        }while(notSorted)
-        if(us.health <= 0 || this.currentEnemy === null){
-            this.currentEnemy = game_state.players[1];
+        } else {
+            this.currentEnemy = sortedPlayers[0];
         }
-            
-        actionList.push(new ShootAction({x: this.currentEnemy.pos.x / 30, y: this.currentEnemy.pos.y / 30}));
-        actionList.push( new MoveAction({x: this.currentEnemy.pos.x / 30, y: this.currentEnemy.pos.y / 30}));
-        //actionList.push(new ShootAction({x : 0, y: 0}))
-        //actionList.push(new ShootAction({x : position.x, y: position.y}))
-        
-        
-        
+    
+        // Add actions to the action list
+        actionList.push(new ShootAction({ x: this.currentEnemy.pos.x / 30 + 0.5, y: this.currentEnemy.pos.y / 30 + 0.5 }));
+        actionList.push(new MoveAction({ x: this.currentEnemy.pos.x / 30, y: this.currentEnemy.pos.y / 30 }));
+    
+        this.position = newPosition;
+    
         return actionList;
     }
+    
+    
 
 
     /**
@@ -166,12 +154,12 @@ class MyBot {
      * @returns None
      */
     on_end() {
-
+        this.currentEnemy = null;
     }
 
-    move_to_closest_coin(coins){
-        
-        return new MoveAction()
+    find_closest_player(){
+
+
     }
 };
 

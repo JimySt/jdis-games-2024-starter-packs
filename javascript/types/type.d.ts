@@ -221,6 +221,7 @@ declare class MyBot {
     on_tick(state: Model.GameState): Model.Actions;
     move_to_closest_coin(coins : Coin[]): MoveAction;
     attack_closest_player(players : Player[]): ShootAction;
+    find_closest_player() : void;
 }
 
 
