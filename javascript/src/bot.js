@@ -69,7 +69,7 @@ class MyBot {
      * @returns{Model.Actions}
      */
     on_tick(game_state) {
-        this.position = game_state.players.find(x => x.name.equals("nomaleatoire")).pos ;
+        this.position = game_state.players.find(x => x.name ==="nomaleatoire").pos ;
         console.log(`Current tick: ${game_state.tick}`);
         let actionList = [];
         
