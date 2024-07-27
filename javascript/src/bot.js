@@ -7,6 +7,7 @@ import { Consts } from '../core/constants.js';
  * (en) This class represents your bot. You can define attributes and methods in it that will be kept 
  *      between each call of the `on_tick` method.
  */
+//cd714cb7-d1a1-42f4-afd7-6b7dc51e33e7
 class MyBot {
     constructor() {
         this.name = 'name_of_my_super_cool_bot';
