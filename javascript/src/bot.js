@@ -15,16 +15,7 @@ class MyBot {
         //this.position = null;
         this.currentWeapon = null;
     }
-
-    //find_us(list){
-    //    for(let i=0;i<list.length;i++){
-    //        if(list[i].name === "EarthIsFlat"){
-    //            us = list[i]
-    //            return;
-    //        }
-    //    }
-    //}
-
+    
     /**
      * (fr) Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
      *      le comportement de voter bot. Elle doit retourner une liste d'actions 
@@ -81,9 +72,7 @@ class MyBot {
 
     on_tick(game_state) {
         var us = null;
-        //find_us(game_state.players)
-        //
-        //console.log(`Current tick: ${game_state.tick}`);
+
         for(let i=0;i<game_state.players.length;i++){
             if(game_state.players[i].name === "EarthIsFlat"){
                 us = game_state.players[i]
