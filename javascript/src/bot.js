@@ -13,6 +13,7 @@ class MyBot {
         this.name = 'name_of_my_super_cool_bot';
         this.state = null;
         this.position = null;
+        this.us = null;
     }
 
 
@@ -71,18 +72,20 @@ class MyBot {
      */
 
     on_tick(game_state) {
-        this.position = game_state.players.find(x => x.name ==="nomaleatoire").pos ;
-        console.log(`Current tick: ${game_state.tick}`);
+        this.us = game_state.players.find(x => x.name === "LookAtThisGraph")
+        this.position = us.pos ;
+        //console.log(`Current tick: ${game_state.tick}`);
         let actionList = [];
         
-        actionList.unshift(this.move_to_closest_coin())
+        actionList.unshift(this.move_to_closest_coin(game_state.coins))
 
-        return [
-            new MoveAction({ x: 10.0, y: 11.34 }),
-            new ShootAction({ x: 11.2222, y: 13.547 }),
-            new SwitchWeaponAction(Weapon.Blade),
-            new SaveAction( new TextEncoder().encode("Hello, world!"))
-        ];
+        //return [
+        //    new MoveAction({ x: 10.0, y: 11.34 }),
+        //    new ShootAction({ x: 11.2222, y: 13.547 }),
+        //    new SwitchWeaponAction(Weapon.Blade),
+        //    new SaveAction( new TextEncoder().encode("Hello, world!"))
+        //];
+        return actionList
     }
 
 
@@ -115,8 +118,9 @@ class MyBot {
 
     }
 
-    move_to_closest_coin(coin){
+    move_to_closest_coin(coins){
         
+        return new MoveAction()
     }
 };
 
