@@ -116,14 +116,14 @@ class MyBot {
         
         let a = game_state.players[0];
         let b = null;
-        let aDist = Math.sqrt((a.pos.x - this.position.x) * (a.pos.x - this.position.x) + (a.pos.y - this.position.y) + (a.pos.y - this.position.y))
+        let aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) + (a.pos.y - position.y))
         let bDist = null;
         let temp = null;
         let notSorted = false;
         do{
             for(let i=0;i<game_state.players.length;i++){
                 b = players[i]
-                bDist = Math.sqrt((b.pos.x - this.position.x) * (b.pos.x - this.position.x) + (b.pos.y - this.position.y) + (b.pos.y - this.position.y))
+                bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) + (b.pos.y - position.y))
                 if(bDist < aDist){
                     temp = a
                     a = b
@@ -176,29 +176,6 @@ class MyBot {
     move_to_closest_coin(coins){
         
         return new MoveAction()
-    }
-
-    attack_closest_player(players){
-        let a = players[0];
-        let b = null;
-        let aDist = Math.sqrt((a.pos.x - this.position.x) * (a.pos.x - this.position.x) + (a.pos.y - this.position.y) + (a.pos.y - this.position.y))
-        let bDist = null;
-        let temp = null;
-        let notSorted = false;
-        do{
-            for(let i=0;i<players.length;i++){
-                b = players[i]
-                bDist = Math.sqrt((b.pos.x - this.position.x) * (b.pos.x - this.position.x) + (b.pos.y - this.position.y) + (b.pos.y - this.position.y))
-                if(bDist < aDist){
-                    temp = a
-                    a = b
-                    b = temp
-                    aDist = bDist
-                    notSorted = true;
-                }
-            }
-        }while(notSorted)
-        return 
     }
 };
 
