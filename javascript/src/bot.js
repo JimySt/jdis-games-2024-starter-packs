@@ -126,8 +126,8 @@ class MyBot {
             }
         }while(notSorted)
         
-        actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
-        actionList.push( new MoveAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}))
+        actionList.push(new ShootAction({x: game_state.players[0].pos.x / 30, y: game_state.players[0].pos.y / 30}));
+        actionList.push( new MoveAction({x: game_state.players[0].pos.x / 30, y: game_state.players[0].pos.y / 30}))
         //actionList.push(new ShootAction({x : 0, y: 0}))
         //actionList.push(new ShootAction({x : position.x, y: position.y}))
         
