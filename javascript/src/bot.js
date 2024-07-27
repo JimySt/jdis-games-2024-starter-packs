@@ -11,6 +11,7 @@ class MyBot {
     constructor() {
         this.name = 'name_of_my_super_cool_bot';
         this.state = null;
+        this.position = null;
     }
 
 
@@ -76,7 +77,11 @@ class MyBot {
     }
 
     on_tick(game_state) {
+        this.position = game_state.players.find(x => x.name ==="nomaleatoire").pos ;
         console.log(`Current tick: ${game_state.tick}`);
+        let actionList = [];
+        
+        actionList.unshift(this.move_to_closest_coin())
 
         return [
             new MoveAction({ x: 10.0, y: 11.34 }),
@@ -114,6 +119,10 @@ class MyBot {
      */
     on_end() {
 
+    }
+
+    move_to_closest_coin(coin){
+        
     }
 };
 
