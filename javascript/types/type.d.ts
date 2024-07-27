@@ -215,9 +215,12 @@ declare class BladeRotateAction {
 };
 
 declare class MyBot {
+    find_us(list : Player[]): void;
     on_start(state: Model.MapState): void;
     on_end(): void;
     on_tick(state: Model.GameState): Model.Actions;
+    move_to_closest_coin(coins : Coin[]): MoveAction;
+    attack_closest_player(players : Player[]): ShootAction;
 }
 
 

@@ -12,10 +12,18 @@ class MyBot {
     constructor() {
         this.name = 'name_of_my_super_cool_bot';
         this.state = null;
-        this.position = null;
-        this.us = null;
+        //this.position = null;
+        this.currentWeapon = null;
     }
 
+    //find_us(list){
+    //    for(let i=0;i<list.length;i++){
+    //        if(list[i].name === "EarthIsFlat"){
+    //            us = list[i]
+    //            return;
+    //        }
+    //    }
+    //}
 
     /**
      * (fr) Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
@@ -72,12 +80,26 @@ class MyBot {
      */
 
     on_tick(game_state) {
-        this.us = game_state.players.find(function(player){return player.name === "EarthIsFlat"})
-        this.position = us.pos ;
+        var us = null;
+        //find_us(game_state.players)
+        //
         //console.log(`Current tick: ${game_state.tick}`);
+        for(let i=0;i<game_state.players.length;i++){
+            if(game_state.players[i].name === "EarthIsFlat"){
+                us = game_state.players[i]
+                break;
+            }
+        }
+        var position = us.pos;
         let actionList = [];
         
-        actionList.unshift(this.move_to_closest_coin(game_state.coins))
+        if(this.currentWeapon === null){
+            actionList.push(new SwitchWeaponAction(1))
+            this.currentWeapon = true
+        }
+        
+        
+        //actionList.unshift(move_to_closest_coin(game_state.coins))
 
         //return [
         //    new MoveAction({ x: 10.0, y: 11.34 }),
@@ -85,8 +107,40 @@ class MyBot {
         //    new SwitchWeaponAction(Weapon.Blade),
         //    new SaveAction( new TextEncoder().encode("Hello, world!"))
         //];
-        actionList.push(attack_closest_player(players))
-        return actionList
+        //actionList.push(attack_closest_player(players))
+        //actionList.push(new SaveAction(new TextEncoder().encode("ok")))
+        actionList.push(new MoveAction({ x : 0, y : 0}));
+        actionList.push(new SaveAction( new TextEncoder().encode("Hello, world!")))
+        
+        
+        
+        let a = game_state.players[0];
+        let b = null;
+        let aDist = Math.sqrt((a.pos.x - this.position.x) * (a.pos.x - this.position.x) + (a.pos.y - this.position.y) + (a.pos.y - this.position.y))
+        let bDist = null;
+        let temp = null;
+        let notSorted = false;
+        do{
+            for(let i=0;i<game_state.players.length;i++){
+                b = players[i]
+                bDist = Math.sqrt((b.pos.x - this.position.x) * (b.pos.x - this.position.x) + (b.pos.y - this.position.y) + (b.pos.y - this.position.y))
+                if(bDist < aDist){
+                    temp = a
+                    a = b
+                    b = temp
+                    aDist = bDist
+                    notSorted = true;
+                }
+            }
+        }while(notSorted)
+        
+        actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
+        //actionList.push(new ShootAction({x : 0, y: 0}))
+        
+        
+        
+        
+        return actionList;
     }
 
 
@@ -144,10 +198,8 @@ class MyBot {
                 }
             }
         }while(notSorted)
-        return new ShootAction(players[0].pos.x, players[0].pos.y);
+        return 
     }
-
-
 };
 
 export { MyBot };
