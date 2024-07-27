@@ -15,7 +15,7 @@ class MyBot {
         //this.position = null;
         this.currentWeapon = null;
     }
-    
+
     /**
      * (fr) Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
      *      le comportement de voter bot. Elle doit retourner une liste d'actions 
@@ -103,29 +103,29 @@ class MyBot {
         
         
         
-        let a = game_state.players[0];
-        let b = null;
-        let aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) + (a.pos.y - position.y))
-        let bDist = null;
-        let temp = null;
-        let notSorted = false;
-        do{
-            for(let i=0;i<game_state.players.length;i++){
-                b = players[i]
-                bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) + (b.pos.y - position.y))
-                if(bDist < aDist){
-                    temp = a
-                    a = b
-                    b = temp
-                    aDist = bDist
-                    notSorted = true;
-                }
-            }
-        }while(notSorted)
+        //let a = game_state.players[0];
+        //let b = null;
+        //let aDist = Math.sqrt((a.pos.x - position.x) * (a.pos.x - position.x) + (a.pos.y - position.y) * (a.pos.y - position.y))
+        //let bDist = null;
+        //let temp = null;
+        //let notSorted = false;
+        //do{
+        //    for(let i=0;i<game_state.players.length;i++){
+        //        b = players[i]
+        //        bDist = Math.sqrt((b.pos.x - position.x) * (b.pos.x - position.x) + (b.pos.y - position.y) * (b.pos.y - position.y))
+        //        if(bDist < aDist){
+        //            temp = a
+        //            a = b
+        //            b = temp
+        //            aDist = bDist
+        //            notSorted = true;
+        //        }
+        //    }
+        //}while(notSorted)
         
-        actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
+        //actionList.push(new ShootAction({x: game_state.players[0].pos.x, y: game_state.players[0].pos.y}));
         //actionList.push(new ShootAction({x : 0, y: 0}))
-        
+        //actionList.push(new ShootAction({x : position.x, y: position.y}))
         
         
         
